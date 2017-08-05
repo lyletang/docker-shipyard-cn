@@ -1,0 +1,82 @@
+<div class="ui padded grid">
+<div class="two column row">
+    <div class="left floated column">
+        <div ng-click="vm.refresh()" class="ui small blue labeled icon button">
+            <i class="refresh icon"></i> 刷新
+        </div>
+    </div>
+    <div class="right aligned right floated column">
+        <div class="ui small icon input">
+            <input ng-model="tableFilter" placeholder="Search nodes..." reset-field/>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="vm.error">
+    <div class="sixteen wide column">
+        <div class="ui error message">
+            <div class="header">Error...</div>
+            <p>{{vm.error}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="vm.nodes.length === 0">
+    <div class="column">
+        <div class="ui icon message">
+            <i class="info icon"></i>
+            <div class="content">
+                <div class="header">
+                    节点管理
+                </div>
+                <p>无集群节点</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="filteredNodes.length>0">
+    <div class="column">
+        <table class="ui sortable celled table" ng-show="vm.nodes">
+            <thead>
+                <tr>
+                    <th>节点名称</th>
+                    <th>节点地址</th>
+                    <th>节点容器</th>
+                    <th>空闲CPU</th>
+                    <th>空闲内存</th>
+                    <th>节点标签</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="n in filteredNodes = (vm.nodes | filter:tableFilter)">
+                    <td>{{n.name}}</td>
+                    <td>{{n.addr}}</td>
+                    <td>{{n.containers}}</td>
+                    <td>{{n.reserved_cpus}}</td>
+                    <td>{{n.reserved_memory}}</td>
+                    <td>{{n.labels.join(', ')}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" ng-show="vm.nodes.length > 0 && filteredNodes.length === 0">
+    <div class="column">
+        <div class="ui icon message">
+            <i class="info icon"></i>
+            <div class="content">
+                <div class="header">
+                    节点管理
+                </div>
+                <p>没有找到成功匹配的节点。</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+$('.ui.sortable.celled.table').tablesort();
+</script>
