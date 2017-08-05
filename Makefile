@@ -1,19 +1,18 @@
-# Makefile for the Docker image janeczku/shipyard-armv7
-# MAINTAINER: Jan Broer <janeczku@yahoo.com>
+# Makefile for the Docker image tangjiahui1014/docker-shipyard-cn
+# The original version of the address: janeczku/docker-shipyard-armv7
 # This must be run on the ARMv7 platform
+# Test on Raspberry Pi 3B
 
 .PHONY: all container release
 
-PREFIX = janeczku
+PREFIX = tangjiahui1014
 TAG = dev-3ef21f
 
 all: container
 
 container:
 	@echo Building Shipyard image $(TAG)
-	# docker build -t $(PREFIX)/shipyard-armv7 .
 	docker build -t ccut .
-	# docker tag $(PREFIX)/shipyard-armv7:latest $(PREFIX)/shipyard-armv7:$(TAG)
 	docker tag ccut:latest ccut:$(TAG)
 
 release: container
